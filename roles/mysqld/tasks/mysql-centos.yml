@@ -1,0 +1,20 @@
+---
+
+- name: Install mysql and additional required packages
+  yum:
+    name: "{{ item }}"
+    state: "latest"
+  with_items:
+    - mysql
+    - mysql-server
+    - MySQL-python27
+  tags:
+    - install
+
+- name: Enable and start the mysqld service
+  service:
+    name: "mysqld"
+    enabled: yes
+    state: "started"
+  tags:
+    - install

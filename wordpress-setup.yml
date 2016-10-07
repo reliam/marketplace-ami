@@ -1,0 +1,101 @@
+---
+
+- name: Rugged Wordpress - LAMP Stack Setup
+  hosts: all
+  become: yes
+
+  roles:
+    - { role: apache }
+    - { role: mysqld }
+
+  vars:
+    - dbuser: "wpadmin"
+    - dbname: "wordpress"
+
+  tasks:
+    - name: Create new MySQL database
+      mysql_db:
+        db: "{{ dbname }}"
+        state: "present"
+      when: sitename is defined
+
+    - name: Generate a 32 character password for MySQL database password
+      command: openssl rand -base64 32
+      register: dbuserpass
+
+    - name: Create new MySQL user
+      mysql_user:
+        name: "{{ dbuser }}"
+        password: "{{ dbuserpass.stdout }}"
+        priv: "{{ dbname }}.*:ALL"
+      when: (dbname is defined) and (dbuserpass is defined)
+
+    - name: Download latest Wordpress install
+      get_url:
+        url: "https://wordpress.org/latest.tar.gz"
+        dest: "/tmp/wp.tar.gz"
+
+    - name: Unpack Wordpress to our new DocumentRoot
+      shell:
+        "tar xzf /tmp/wp.tar.gz -C /var/www/html/ --strip 1"
+
+    - name: Create new wp-config.php file
+      shell:
+        "echo '<?php' > /var/www/html/wp-config.php"
+
+    - name: Update wp-config.php with database name
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('DB_NAME', '{{ dbname }}');"
+
+    - name: Update wp-config.php with database user
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('DB_USER', '{{ dbuser }}');"
+
+    - name: Update wp-config.php with database password
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('DB_PASSWORD', '{{ dbuserpass.stdout }}');"
+
+    - name: Update wp-config.php with database host
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('DB_HOST', 'localhost');"
+
+    - name: Retrieve fresh salts
+      shell:
+        "curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-config.php"
+
+    - name: Update wp-config.php with debug info
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('WP_DEBUG', 'false');"
+
+    - name: Update wp-config.php with language info
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "define('WP_LANG', '');"
+
+    - name: Update wp-config.php with table prefix
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "$table_prefix  = 'wp_';"
+
+    - name: Update wp-config.php with path info
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "if ( !defined('ABSPATH') ){ define('ABSPATH', dirname(__FILE__) . '/'); }"
+
+    - name: Update wp-config.php with path info
+      lineinfile:
+        dest: "/var/www/html/wp-config.php"
+        line: "require_once(ABSPATH . 'wp-settings.php');"
+
+    - name: Set appropriate permissions
+      file:
+        path: "/var/www/html/"
+        recurse: yes
+        state: "directory"
+        owner: "www"
+        group: "www"

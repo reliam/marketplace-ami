@@ -1,0 +1,21 @@
+---
+
+- name: Install mysql
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: "latest"
+  with_items:
+    - mysql-client
+    - mysql-server
+    - python-mysqldb
+  tags:
+    - install
+
+- name: Enable and start the mysql service
+  service:
+    name: "mysql"
+    enabled: yes
+    state: "started"
+  tags:
+    - install

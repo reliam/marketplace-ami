@@ -1,0 +1,4 @@
+---
+
+- { include: mysql-centos.yml }
+- { include: mysql_secure_installation.yml }
