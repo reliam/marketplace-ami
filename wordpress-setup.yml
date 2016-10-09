@@ -97,3 +97,8 @@
         state: "directory"
         owner: "apache"
         group: "apache"
+
+    - name: Delete the maintenance index.html
+      file:
+        path: "/var/www/html/index.html"
+        state: "absent"
