@@ -17,7 +17,6 @@
       mysql_db:
         db: "{{ dbname }}"
         state: "present"
-      when: sitename is defined
 
     - name: Generate a 32 character password for MySQL database password
       command: openssl rand -base64 32
@@ -28,7 +27,6 @@
         name: "{{ dbuser }}"
         password: "{{ dbuserpass.stdout }}"
         priv: "{{ dbname }}.*:ALL"
-      when: (dbname is defined) and (dbuserpass is defined)
 
     - name: Download latest Wordpress install
       get_url:
@@ -97,5 +95,5 @@
         path: "/var/www/html/"
         recurse: yes
         state: "directory"
-        owner: "www"
-        group: "www"
+        owner: "apache"
+        group: "apache"

@@ -1,4 +1,0 @@
----
-
-- { include: mysql-ubuntu.yml }
-- { include: mysql_secure_installation.yml }
