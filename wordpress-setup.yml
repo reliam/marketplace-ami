@@ -98,6 +98,18 @@
         owner: "apache"
         group: "apache"
 
+    - name: Update welcome text
+      copy:
+        src: "welcome.txt"
+        dest: "/home/ec2-user/.welcome"
+        owner: "ec2-user"
+        group: "ec2-user"
+        mode: "0644"
+
+    - name: Update default post
+      shell:
+        "/usr/local/bin/wp-cli --path=/var/www/html post update 1 /home/ec2-user/.welcome --post_title='Thanks For Choosing Us'"
+
     - name: Delete the maintenance index.html
       file:
         path: "/var/www/html/index.html"
