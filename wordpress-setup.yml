@@ -108,7 +108,7 @@
 
     - name: Update default post
       shell:
-        "/usr/local/bin/wp-cli --path=/var/www/html post update 1 /home/ec2-user/.welcome --post_title='Thanks For Choosing Us'"
+        "/usr/local/bin/wp-cli --path=/var/www/html post update 1 /home/ec2-user/.welcome --post_title='Thanks For Choosing Us' --allow-root"
 
     - name: Delete the maintenance index.html
       file:
