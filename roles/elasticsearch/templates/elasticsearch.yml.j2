@@ -1,0 +1,32 @@
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+
+cluster.name: {{ elk_cluster_name }}
+
+# ------------------------------------ Node ------------------------------------
+#
+
+node.name: {{ elk_node_name }}
+
+# ----------------------------------- Paths ------------------------------------
+# Path to directory where data resides
+
+path.data: {{ es_data_dir }}
+
+# Path to log files:
+
+path.logs: /var/log/elasticsearch
+
+# ----------------------------------- Memory -----------------------------------
+# Lock the memory on startup:
+
+bootstrap.mlockall: true
+
+# ---------------------------------- Network -----------------------------------
+# Set the bind adress to a specific IP (IPv4 or IPv6):
+
+network.host: 0.0.0.0

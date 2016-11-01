@@ -1,0 +1,13 @@
+---
+
+es_gpg_key: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+
+es_repo_centos: "http://packages.elastic.co/elasticsearch/2.x/centos"
+
+es_data_dir: "/var/data/elasticsearch"
+
+es_lib_dir: "/var/lib/elasticsearch"
+
+elk_cluster_name: "{{ ansible_hostname }}"
+
+elk_node_name: "{{ ansible_hostname }}"

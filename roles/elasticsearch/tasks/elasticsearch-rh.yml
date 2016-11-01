@@ -1,0 +1,36 @@
+---
+
+- name: Add Elasticsearch repo
+  copy:
+    src: "elasticsearch.repo"
+    dest: "/etc/yum.repos.d/elasticsearch.repo"
+
+- name: Install Elasticsearch package
+  yum:
+    name: "elasticsearch"
+    state: "latest"
+
+- name: Install Java dependencies (CentOS hosts)
+  yum:
+    name: "java-1.8.0-openjdk"
+    state: "latest"
+
+- name: Open elasticsearch port 9200 (iptables)
+  iptables:
+    chain: "INPUT"
+    protocol: "tcp"
+    destination_port: 9200
+    jump: "ACCEPT"
+
+- name: Open elasticsearch port 9300 (iptables)
+  iptables:
+    chain: "INPUT"
+    protocol: "tcp"
+    destination_port: 9300
+    jump: "ACCEPT"
+
+- name: Set Elasticsearch to start on boot
+  service:
+    name: "elasticsearch"
+    enabled: true
+    state: started

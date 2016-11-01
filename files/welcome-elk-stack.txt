@@ -1,0 +1,19 @@
+
+Hello!
+
+Welcome to Reliam's ELK Stack AMI! This instance provides a standard logging software stack.
+The next step is to configure your systems to ship logs to this instance.
+
+There are many ways to do this, but here are some methods we prefer:
+
+ - Sending Apache logs to Elasticsearch with Fluentd: http://docs.fluentd.org/articles/recipe-apache-logs-to-elasticsearch
+ - Configuring Elastic's Filebeat log shipper: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration.html
+ - Shipping logs to Logstash with Rsyslog: https://techpunch.co.uk/development/how-to-ship-logs-with-rsyslog-and-logstash
+
+If you would like assistance or consulting, please contact us! We're a team of DevOps engineers specializing
+in highly available, fault tolerant web application hosting. We build solutions and help with scaling, deployment,
+backups, monitoring, and anything else needed to empower your application.
+
+Reliam. When failure is simply not an option.
+http://reliam.com
+1-310-348-9700

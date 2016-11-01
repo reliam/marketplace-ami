@@ -1,0 +1,20 @@
+---
+##
+#
+
+- name: Add Logstash repo
+  copy:
+    src: "logstash.repo"
+    dest: "/etc/yum.repos.d/logstash.repo"
+
+- name: Install logstash package
+  yum:
+    name: "logstash"
+    state: "latest"
+
+- name: Open logstash port (iptables)
+  iptables:
+    chain: "INPUT"
+    protocol: "tcp"
+    destination_port: "5000"
+    jump: "ACCEPT"

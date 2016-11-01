@@ -1,0 +1,4 @@
+---
+
+- include: elasticsearch-rh.yml
+- include: common.yml

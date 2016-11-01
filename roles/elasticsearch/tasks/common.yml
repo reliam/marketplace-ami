@@ -1,0 +1,27 @@
+---
+
+
+
+- name: Create Elasticsearch data folder
+  file:
+    path: "{{ es_data_dir }}"
+    state: "directory"
+    owner: "elasticsearch"
+    group: "elasticsearch"
+    recurse: yes
+
+- name: Create Elasticsearch lib folder
+  file:
+    path: "{{ es_lib_dir }}"
+    state: "directory"
+    owner: "elasticsearch"
+    group: "elasticsearch"
+    recurse: yes
+
+- name: Copy Elasticsearch config file
+  template:
+    src: "elasticsearch.yml.j2"
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+    backup: yes
+  notify:
+    restart elasticsearch

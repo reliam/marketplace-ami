@@ -1,0 +1,9 @@
+---
+
+- name: Set Kibana to start on boot
+  service:
+    name: "kibana"
+    enabled: true
+    state: "started"
+  tags:
+    - install

@@ -1,0 +1,23 @@
+---
+##
+# roles/nginx handlers
+
+- name: restart nginx
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: restart php-fpm
+  service:
+    name: "php-fpm"
+    state: "restarted"
+
+- name: restart firewalld
+  service:
+    name: "firewalld"
+    state: "restarted"
+
+- name: restart php7.0-fpm
+  service:
+    name: "php7.0-fpm"
+    state: "restarted"

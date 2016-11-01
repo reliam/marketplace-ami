@@ -1,0 +1,15 @@
+---
+
+- name: Set Logstash to start on boot
+  service:
+    name: "logstash"
+    enabled: true
+    state: "started"
+
+- name: Copy Logstash config file
+  template:
+    src: "reliam.logstash.conf"
+    dest: "/etc/logstash/conf.d/standard.logstash.conf"
+    backup: yes
+  notify:
+    restart logstash

@@ -1,0 +1,55 @@
+---
+
+- name: Download nginx and php
+  yum:
+    name: "{{ item }}"
+    state: "latest"
+  with_items:
+    - epel-release
+    - nginx
+    - php-fpm
+    - php-cli
+    - php
+  tags:
+    - install
+    - nginx
+
+- name: Open port 80 on firewall
+  iptables:
+    chain: "INPUT"
+    protocol: "tcp"
+    destination_port: 80
+    jump: "ACCEPT"
+
+- name: Copy standard nginx file
+  template:
+    src: "nginx.conf"
+    dest: "/etc/nginx/conf.d/nginx.conf"
+  notify:
+    restart nginx
+  tags:
+    - install
+    - configure
+    - nginx
+
+- name: Copy php-fpm config file
+  copy:
+    src: "www-centos.conf"
+    dest: "/etc/php-fpm.d/www.conf"
+  notify:
+    restart php-fpm
+  tags:
+    - install
+    - configure
+    - nginx
+
+- name: Enable services on startup
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: "restarted"
+  with_items:
+    - "nginx"
+    - "php-fpm"
+  tags:
+    - install

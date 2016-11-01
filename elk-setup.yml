@@ -1,0 +1,21 @@
+---
+
+- name: Reliam ELK Stack
+  hosts: all
+  become: yes
+
+  roles:
+    - { role: elasticsearch }
+    - { role: kibana }
+    - { role: logstash }
+
+  vars:
+
+  tasks:
+    - name: Update welcome text
+      copy:
+        src: "welcome-elk-stack.txt"
+        dest: "/home/ec2-user/.welcome"
+        owner: "ec2-user"
+        group: "ec2-user"
+        mode: "0644"

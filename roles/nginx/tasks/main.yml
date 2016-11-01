@@ -1,0 +1,14 @@
+---
+
+- {
+  include: nginx-centos7.yml,
+  when: ansible_distribution_major_version == "7" and ansible_os_family == "RedHat"
+  }
+- {
+  include: nginx-centos6.yml,
+  when: ansible_distribution_major_version == "6" and ansible_os_family == "RedHat"
+  }
+- {
+  include: nginx-ubuntu.yml,
+  when: ansible_os_family == "Debian"
+  }
