@@ -1,7 +1,5 @@
 ---
 
-
-
 - name: Create Elasticsearch data folder
   file:
     path: "{{ es_data_dir }}"
