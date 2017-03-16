@@ -1,0 +1,39 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "aws_region": "us-east-1",
+    "instance_type": "t2.micro",
+    "vpc_id": "{{env `PACKER_VPC`}}",
+    "subnet_id": "{{env `PACKER_SUBNET`}}",
+    "ssh_user": "ec2-user",
+    "build_name": "{{env `PACKER_BUILD`}}",
+    "build_description": "{{env `PACKER_DESC`}}",
+    "build_playbook": "{{env `PACKER_PLAYBOOK`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `aws_region`}}",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "*amzn-ami-hvm*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["amazon"],
+      "most_recent": true
+    },
+    "instance_type": "{{user `instance_type`}}",
+    "ssh_username": "{{user `ssh_user`}}",
+    "ami_name": "{{user `build_name`}} {{isotime | clean_ami_name}}",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}"
+  }],
+  "provisioners": [{
+  	"type": "ansible",
+  	"playbook_file": "ami_builder.yml",
+    "extra_arguments": ["--extra-vars", "playbook_file={{user `build_playbook`}}"]
+  }]
+}
