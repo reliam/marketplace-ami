@@ -1,0 +1,24 @@
+---
+
+- name: Reliam AMI Builder
+  hosts: all
+  become: yes
+
+  roles:
+
+  vars:
+
+  tasks:
+    - name: "Install Git"
+      yum:
+        name: "git"
+        state: "installed"
+
+    - name: "Install Ansible"
+      shell:
+        "pip install ansible"
+
+    - name: "Update CloudInit configs"
+      template:
+        src: "files/20_cloudinit_reliam.cfg.j2"
+        dest: "/etc/cloud/cloud.cfg.d/20_cloudinit_reliam.cfg"

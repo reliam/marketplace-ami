@@ -1,0 +1,9 @@
+# Populate variables in here and move to .env (prepend a "dot" to the file name)
+#
+# Run `source .env` and proceed with the build
+
+export PACKER_VPC=''
+export PACKER_SUBNET=''
+export PACKER_BUILD=''
+export PACKER_DESC=''
+export PACKER_PLAYBOOK=''

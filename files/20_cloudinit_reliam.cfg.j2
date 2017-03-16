@@ -1,0 +1,9 @@
+# /etc/cloud/cloud.cfg.d/20_cloudinit_reliam.cfg
+
+repo_update: true
+repo_upgrade: all
+
+runcmd:
+ - /usr/bin/git clone https://github.com/reliam/marketplace-ami.git /opt/reliam/marketplace-ami
+ - /usr/local/bin/ansible-playbook -i /opt/reliam/marketplace-ami/hosts -v /opt/reliam/marketplace-ami/{{ playbook_file }}
+ - /bin/bash -c rm -rf /opt/ansible /opt/reliam/
