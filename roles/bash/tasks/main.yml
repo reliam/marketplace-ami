@@ -4,3 +4,8 @@
   copy:
     src: "bashrc"
     dest: "/home/ec2-user/.bashrc"
+
+- name: Copy motd file
+  copy:
+    src: "motd"
+    dest: "/etc/motd"

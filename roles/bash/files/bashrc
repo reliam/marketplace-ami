@@ -13,13 +13,13 @@ bshrcMemory=$(head -1 /proc/meminfo | awk '{print $2 " " $3}')
 
 if [[ ! -z $PS1 ]]
 then
-  echo "---
-  Hostname: ${bshrcHostname}
-  Private IP: ${bshrcIP}
-  Public IP: ${bshrcpubIP}
-  Platform: ${bshrcPlatform}
-  Cores: 4
-  Memory: ${bshrcMemory}
-  ---"
-  cat ~/.welcome
+echo "---
+Hostname: ${bshrcHostname}
+Private IP: ${bshrcIP}
+Public IP: ${bshrcpubIP}
+Platform: ${bshrcPlatform}
+Cores: 4
+Memory: ${bshrcMemory}
+---"
+cat ~/.welcome
 fi
