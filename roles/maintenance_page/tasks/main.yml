@@ -1,0 +1,10 @@
+---
+
+- name: Download Reliam maintenance page
+  get_url:
+    url: "{{ maintenance_package }}"
+    dest: "/tmp/maint.tar.gz"
+
+- name: Setup maintenance page
+  shell:
+    "tar xzvf /tmp/maint.tar.gz -C /var/www/html --strip 1"

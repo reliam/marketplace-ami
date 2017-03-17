@@ -7,6 +7,7 @@
   roles:
     - { role: php }
     - { role: apache }
+    - { role: maintenance_page }
     - { role: mysqld }
     - { role: mysqld_backup }
     - { role: bash }
