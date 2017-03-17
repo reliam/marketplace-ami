@@ -1,0 +1,22 @@
+---
+
+- name: "Create directory tree for database snapshots"
+  file:
+    path: "{{ snaps_path }}"
+    state: "directory"
+
+- name: "Create directory tree for database scripts"
+  file:
+    path: "{{ scripts_path }}"
+    state: "directory"
+
+- name: "Copy mysql backup automation to system"
+  template:
+    src: "dump_all_databases.sh.j2"
+    dest: "{{ scripts_path }}/dump_all_databases.sh"
+    mode: 0775
+
+- name: "Copy crond file to enable nightly script executions"
+  copy:
+    src: "backup_mysql.conf"
+    dest: "{{ cron_path }}/backup_mysql"

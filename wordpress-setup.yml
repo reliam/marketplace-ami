@@ -5,10 +5,11 @@
   become: yes
 
   roles:
-    - { role: php    }
+    - { role: php }
     - { role: apache }
     - { role: mysqld }
-    - { role: bash   }
+    - { role: mysqld_backup }
+    - { role: bash }
 
   vars:
     - dbuser: "wpadmin"

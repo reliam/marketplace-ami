@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Quick shell script for dumping all databases. Set a cron job to run daily
+# <%= @retention %> day retention period for backing up db's to the local disk
+# Make sure whichever user is executing the shell script is able to authenticate to mysql automatically (with ~/.my.cnf)
+#
+# 2 AM sound good?
+# 0 2 * * * //dump_all_databases.sh
+
+# Get current date stamp
+date=$(date +%Y%m%d-%H%M)
+
+# Get all databases besides built-in
+databases=$(mysql -e "show databases;" | awk '{print $1}' | grep -v -e "Database\|schema")
+
+mkdir -p {{ snaps_path }}
+cd {{ snaps_path }}
+
+for db in ${databases}
+do
+  echo "[+] Dumping $db to {{ snaps_path }}/{{ ansible_hostname }}-${db}-${date}.sql"
+  mysqldump "${db}" > "{{ snaps_path }}/{{ ansible_hostname }}-${db}-${date}.sql"
+  if [[ $(which gzip) ]]
+  then
+      gzip -9 "{{ snaps_path }}/{{ ansible_hostname }}-${db}-${date}.sql"
+  fi
+done
+
+
+# Delete older sql files
+find <%= @backup_directory %> -type f -iname '*.sql.*' -mtime +<%= @retention %> -exec rm {} -f \;

@@ -1,0 +1,6 @@
+---
+
+scripts_path: "/opt/reliam/scripts/db"
+snaps_path: "/opt/reliam/backups/database"
+cron_path: "/etc/cron.d"
+retention_days: 15
