@@ -1,6 +1,6 @@
 ---
 
-- name: Rugged Wordpress - LAMP Stack Setup
+- name: Reliam Grav - Flat file PHP CMS
   hosts: all
   become: yes
 
