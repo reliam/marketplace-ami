@@ -99,6 +99,11 @@
         owner: "apache"
         group: "apache"
 
+    - name: Restart Apache
+      service:
+        name: "httpd"
+        state: "restarted"
+
     - name: Update welcome text
       copy:
         src: "welcome.txt"
@@ -111,8 +116,3 @@
       file:
         path: "/var/www/html/index.html"
         state: "absent"
-
-    - name: Restart Apache
-      service:
-        name: "httpd"
-        state: "restarted"
