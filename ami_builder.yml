@@ -22,3 +22,13 @@
       template:
         src: "files/20_cloudinit_reliam.cfg.j2"
         dest: "/etc/cloud/cloud.cfg.d/20_cloudinit_reliam.cfg"
+
+    - name: Copy AMI prep script
+      copy:
+        src: "files/prep_ami.sh"
+        dest: "/opt/prep_ami.sh"
+        mode: 775
+
+    - name: Execute AMI prep script to clean the AMI of any SSH/history info
+      shell:
+        "/bin/bash /opt/prep_ami.sh"
