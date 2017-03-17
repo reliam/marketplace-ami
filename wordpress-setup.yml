@@ -107,8 +107,12 @@
         group: "ec2-user"
         mode: "0644"
 
-
     - name: Delete the maintenance index.html
       file:
         path: "/var/www/html/index.html"
         state: "absent"
+
+    - name: Restart Apache
+      service:
+        name: "httpd"
+        state: "restarted"
