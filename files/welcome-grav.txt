@@ -1,0 +1,13 @@
+
+Hello!
+
+Welcome to Reliam's Grav AMI! By default, this instance is for a single Grav site,
+but can certainly be expanded to host more.
+
+If you would like assistance or consulting, please contact us! We're a team of DevOps engineers specializing
+in highly available, fault tolerant web application hosting. We build solutions and help with scaling, deployment,
+backups, monitoring, and anything else needed to empower your application.
+
+Reliam. When failure is simply not an option.
+http://reliam.com
+1-310-348-9700

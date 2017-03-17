@@ -1,0 +1,73 @@
+---
+
+- name: Rugged Wordpress - LAMP Stack Setup
+  hosts: all
+  become: yes
+
+  roles:
+    - { role: php }
+    - { role: apache }
+    - { role: bash }
+
+  vars:
+
+  tasks:
+    - name: Update welcome text
+      copy:
+        src: "welcome-grav.txt"
+        dest: "/home/ec2-user/.welcome"
+        owner: "ec2-user"
+        group: "ec2-user"
+        mode: "0644"
+
+    - name: Download latest Grav install
+      get_url:
+        url: "https://getgrav.org/download/core/grav-admin/latest"
+        dest: "/tmp/grav.zip"
+
+    - name: Unpack Grav zip to temp directory
+      shell:
+        "unzip -o /tmp/grav.zip -d /tmp/"
+
+    - name: Rsync unpacked grav to html directory
+      shell:
+        "rsync -avz --delete /tmp/grav-admin/ /var/www/html/"
+
+    - name: Delete temp directory
+      shell:
+        "rm -rf /tmp/*"
+
+    - name: Add default vhost config
+      copy:
+        src: "files/default_vhost.conf"
+        dest: "/etc/httpd/conf.d/00_default.conf"
+
+    - name: Setup Grav autoupdates
+      shell:
+        "cd /var/www/html/ && bin/gpm selfupgrade -f"
+
+    - name: Set appropriate permissions
+      file:
+        path: "/var/www/html/"
+        recurse: yes
+        state: "directory"
+        owner: "apache"
+        group: "apache"
+
+    - name: Restart Apache
+      service:
+        name: "httpd"
+        state: "restarted"
+
+    - name: Update welcome text
+      copy:
+        src: "welcome-grav.txt"
+        dest: "/home/ec2-user/.welcome"
+        owner: "ec2-user"
+        group: "ec2-user"
+        mode: "0644"
+
+    - name: Delete the maintenance index.html
+      file:
+        path: "/var/www/html/index.html"
+        state: "absent"
