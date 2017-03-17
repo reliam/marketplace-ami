@@ -1,0 +1,6 @@
+---
+
+- name: Copy bashrc file
+  copy:
+    src: "bashrc"
+    dest: "/home/ec2-user/.bashrc"

@@ -1,0 +1,25 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+bshrcHostname=$(curl --silent http://169.254.169.254/latest/meta-data/local-hostname)
+bshrcIP=$(curl --silent http://169.254.169.254/latest/meta-data/local-ipv4)
+bshrcpubIP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
+bshrcPlatform=$(cat /etc/system-release)
+bshrcMemory=$(head -1 /proc/meminfo | awk '{print $2 " " $3}')
+
+if [[ ! -z $PS1 ]]
+then
+  echo "---
+  Hostname: ${bshrcHostname}
+  Private IP: ${bshrcIP}
+  Public IP: ${bshrcpubIP}
+  Platform: ${bshrcPlatform}
+  Cores: 4
+  Memory: ${bshrcMemory}
+  ---"
+  cat ~/.welcome
+fi

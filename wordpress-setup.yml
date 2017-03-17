@@ -8,6 +8,7 @@
     - { role: php    }
     - { role: apache }
     - { role: mysqld }
+    - { role: bash   }
 
   vars:
     - dbuser: "wpadmin"
