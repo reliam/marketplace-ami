@@ -1,0 +1,15 @@
+---
+
+- name: Install PHP  packages
+  yum:
+    name: "{{ item }}"
+    state: "installed"
+  with_items:
+    - php56
+    - php56-common
+    - php56-gd
+    - php56-mbstring
+    - php56-mcrypt
+    - php56-mysqlnd
+    - php56-opcache
+    - php56-xml
