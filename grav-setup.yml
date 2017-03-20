@@ -47,6 +47,10 @@
       shell:
         "cd /var/www/html/ && bin/gpm selfupgrade -f"
 
+    - name: Add admin user
+      shell:
+        "cd /var/www/html && bin/plugin login add-user -u admin -p $(curl -s 169.254.169.254/latest/meta-data/instance-id)_Grav -n"
+
     - name: Set appropriate permissions
       file:
         path: "/var/www/html/"
